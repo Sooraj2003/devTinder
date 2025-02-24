@@ -6,7 +6,7 @@ const userAuth = async (req,res,next)=>{
     //Validate the token
     const {token} = req.cookies;
     if(!token){
-        throw new Error("Token not found!!!")
+        return res.status(401).send("Unauthorised")
     }
     const decodedObj = await jwt.verify(token,"Dev@Tinder69");
     const {_id } = decodedObj;
