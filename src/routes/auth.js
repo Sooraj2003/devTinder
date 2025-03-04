@@ -18,7 +18,12 @@
       password:passwordHash
     });
     await user.save();
-    res.send("User added successfully")
+    const token = await user.getJwt();
+    res.cookie("token",token,{ 
+      expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days in milliseconds
+    });
+
+    res.send(user);
   }catch(err){
     res.status(400).send("User not added")
     console.log("User not saved "+err.message);
